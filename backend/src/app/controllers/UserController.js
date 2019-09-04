@@ -43,18 +43,22 @@ class UserController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
+      name: Yup.string().required('Your name is required'),
       email: Yup.string()
-        .email()
-        .required(),
-      oldPassword: Yup.string().min(6),
-      password: Yup.string()
-        .min(6)
-        .when('oldPassword', (oldPassword, field) =>
-          oldPassword ? field.required() : field
-        ),
+        .email('Please insert a valid email')
+        .required('Your email is required'),
+      oldPassword: Yup.string(),
+      password: Yup.string().when('oldPassword', (oldPassword, field) =>
+        oldPassword
+          ? field.required('Your new password is required').min(6)
+          : field
+      ),
       confirmPassword: Yup.string().when('password', (password, field) =>
-        password ? field.required().oneOf([Yup.ref('password')]) : field
+        password
+          ? field
+              .required('Please confirm the password')
+              .oneOf([Yup.ref('password')], 'The passwords do not match')
+          : field
       ),
     });
 
@@ -85,10 +89,12 @@ class UserController {
     await user.update(req.body);
 
     const { id, name, avatar } = await User.findByPk(req.userId, {
+      attributes: ['id', 'name', 'email'],
       include: [
         {
           model: File,
           as: 'avatar',
+          attributes: ['id', 'path', 'url'],
         },
       ],
     });
