@@ -40,6 +40,10 @@ export const Container = styled.ul`
       margin-left: 30px;
       font-size: 14px;
       color: ${palette.primaryColor};
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 `;

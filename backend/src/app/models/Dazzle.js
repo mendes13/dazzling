@@ -21,6 +21,7 @@ class Dazzle extends Model {
   static associate(models) {
     this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
     this.belongsTo(models.File, { foreignKey: 'logo_id', as: 'logo' });
+    this.hasMany(models.Stack, { foreignKey: 'dazzle_id', as: 'stack' });
   }
 }
 

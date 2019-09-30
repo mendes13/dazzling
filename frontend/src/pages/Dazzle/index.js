@@ -69,7 +69,7 @@ export default function Dazzle({ match }) {
         <p>{dazzle && dazzle.description}</p>
       </Description>
 
-      <TechStack />
+      {dazzle && dazzle.stack.length > 0 && <TechStack techs={dazzle.stack} />}
     </Container>
   );
 }

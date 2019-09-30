@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 
 import Dazzle from '../models/Dazzle';
+import Tech from '../models/Tech';
+import Stack from '../models/Stack';
 import File from '../models/File';
 
 class DazzleController {
@@ -34,6 +36,20 @@ class DazzleController {
           model: File,
           as: 'logo',
           attributes: ['id', 'path', 'url'],
+        },
+        // This "Stack include" should be here if it is desirable to
+        // the frontend to make just one request to the backend in the show method
+        {
+          model: Stack,
+          as: 'stack',
+          attributes: ['id', 'tech_id', 'dazzle_id', 'description'],
+          include: [
+            {
+              model: Tech,
+              as: 'tech',
+              attributes: ['id', 'name', 'hex_color'],
+            },
+          ],
         },
       ],
     });
