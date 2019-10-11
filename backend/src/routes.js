@@ -29,7 +29,7 @@ routes.post('/dazzles', DazzleController.store);
 routes.put('/dazzles/:id', DazzleController.update);
 routes.delete('/dazzles/:id', DazzleController.delete);
 
-routes.get('/admin/techs', TechController.index);
+routes.get('/techs', TechController.index);
 routes.post('/admin/techs', TechController.store);
 routes.put('/admin/techs/:id', TechController.update);
 routes.delete('/admin/techs/:id', TechController.delete);

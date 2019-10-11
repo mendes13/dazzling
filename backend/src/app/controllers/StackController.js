@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 
 import Stack from '../models/Stack';
 import Dazzle from '../models/Dazzle';
@@ -12,6 +13,13 @@ class StackController {
       where: {
         dazzle_id,
       },
+      include: [
+        {
+          model: Tech,
+          as: 'tech',
+          attributes: ['id', 'name', 'color'],
+        },
+      ],
     });
 
     return res.json(stacks);
@@ -68,14 +76,25 @@ class StackController {
 
     if (alreadyHasThatTech) {
       return res
-        .status(401)
-        .json({ error: 'This dazzle already has this technology' });
+        .status(400)
+        .json({ error: 'Your dazzle already has this technology' });
     }
 
-    const stack = await Stack.create({
+    const { id } = await Stack.create({
       tech_id,
       dazzle_id,
       description,
+    });
+
+    const stack = await Stack.findOne({
+      where: { id },
+      include: [
+        {
+          model: Tech,
+          as: 'tech',
+          attributes: ['id', 'name', 'color'],
+        },
+      ],
     });
 
     return res.json(stack);
@@ -83,6 +102,7 @@ class StackController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
+      tech_id: Yup.number(),
       description: Yup.string(),
     });
 
@@ -102,7 +122,6 @@ class StackController {
         {
           model: Dazzle,
           as: 'dazzle',
-          attributes: ['user_id'],
         },
       ],
     });
@@ -111,16 +130,51 @@ class StackController {
       return res.status(400).json({ error: 'This tech stack does not exist' });
     }
 
+    const { tech_id } = req.body;
+
+    const techExists = await Tech.findOne({
+      where: {
+        id: tech_id,
+      },
+    });
+
+    if (!techExists) {
+      return res.status(400).json({ error: 'This technology does not exist' });
+    }
+
     if (stack.dazzle.user_id !== req.userId) {
       return res.status(403).json({
         error: `Only the Dazzle's creators can update the tech stacks`,
       });
     }
 
-    const { description } = req.body;
+    const alreadyHasThatTech = await Stack.findOne({
+      where: {
+        id: {
+          [Op.ne]: id,
+        },
+        tech_id,
+        dazzle_id: stack.dazzle.id,
+      },
+    });
 
-    const newStack = await stack.update({
-      description,
+    if (alreadyHasThatTech) {
+      return res
+        .status(400)
+        .json({ error: 'Your dazzle already has this technology' });
+    }
+
+    await stack.update(req.body);
+
+    const newStack = await Stack.findOne({
+      where: { id },
+      include: [
+        {
+          model: Tech,
+          as: 'tech',
+          attributes: ['id', 'name', 'color'],
+        },
+      ],
     });
 
     return res.json(newStack);

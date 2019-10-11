@@ -25,7 +25,6 @@ export default function Dazzle({ match }) {
         const response = await api.get(`dazzles/${id}`);
         setDazzle(response.data);
         setLoading(false);
-        console.tron.log(response.data);
       } catch (err) {
         setLoading(false);
         toast.error('Something went wrong');
@@ -35,6 +34,16 @@ export default function Dazzle({ match }) {
 
     load();
   }, [id]);
+
+  async function handleDelete() {
+    try {
+      await api.delete(`dazzles/${id}`);
+      toast.success('Dazzle deleted with success');
+      history.push('/dashboard');
+    } catch (err) {
+      toast.error('An error has occured, please try again');
+    }
+  }
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -48,11 +57,11 @@ export default function Dazzle({ match }) {
           <h1>{dazzle && dazzle.name}</h1>
         </div>
         <aside>
-          <Link to="/">
+          <Link to={`/dazzle/edit/${id}`}>
             <MdCreate size={18} color={palette.primaryGray} />
             Edit
           </Link>
-          <button type="button">
+          <button type="button" onClick={handleDelete}>
             <MdDeleteSweep size={18} color={palette.primaryGray} />
             Delete
           </button>

@@ -11,7 +11,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      hex_color: {
+      color: {
         type: Sequelize.STRING,
         allowNull: true,
       },

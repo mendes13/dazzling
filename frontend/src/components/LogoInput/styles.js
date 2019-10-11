@@ -1,15 +1,12 @@
 import styled from 'styled-components';
 
-import * as palette from '../../../styles/variables';
+import * as palette from '../../styles/variables';
 
-export const Container = styled.div`
-  margin-bottom: 40px;
-
+export const Container = styled.span`
   label {
     cursor: pointer;
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
+    width: 45px;
+    height: 45px;
     overflow: hidden;
 
     display: flex;
@@ -25,6 +22,7 @@ export const Container = styled.div`
       z-index: 1;
       width: 100%;
       height: 100%;
+      border-radius: 4px;
 
       position: absolute;
       top: 50%;
@@ -43,6 +41,8 @@ export const Container = styled.div`
     img {
       width: 100%;
       height: 100%;
+      border-radius: 4px;
+      background-color: ${palette.primaryGray};
       object-fit: cover;
     }
 

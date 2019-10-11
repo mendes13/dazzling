@@ -13,7 +13,7 @@ class TechController {
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
-      hex_color: Yup.string(),
+      color: Yup.string(),
     });
 
     const schemaIsValid = await schema.isValid(req.body);
@@ -43,7 +43,7 @@ class TechController {
   async update(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
-      hex_color: Yup.string(),
+      color: Yup.string(),
     });
 
     const schemaIsValid = await schema.isValid(req.body);

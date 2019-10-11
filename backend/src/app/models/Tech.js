@@ -5,7 +5,7 @@ class Tech extends Model {
     super.init(
       {
         name: Sequelize.STRING,
-        hex_color: Sequelize.STRING,
+        color: Sequelize.STRING,
       },
       {
         sequelize: connection,

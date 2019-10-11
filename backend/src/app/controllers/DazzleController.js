@@ -47,7 +47,7 @@ class DazzleController {
             {
               model: Tech,
               as: 'tech',
-              attributes: ['id', 'name', 'hex_color'],
+              attributes: ['id', 'name', 'color'],
             },
           ],
         },
@@ -141,7 +141,7 @@ class DazzleController {
 
     const newDazzle = await dazzle.update(req.body);
 
-    return res.json({ dazzle: newDazzle });
+    return res.json(newDazzle);
   }
 
   async delete(req, res) {
