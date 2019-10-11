@@ -49,4 +49,8 @@ export default createGlobalStyle`
     cursor: pointer;
   }
 
+  textarea {
+    resize: none;
+  }
+
 `;

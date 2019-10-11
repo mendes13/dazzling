@@ -8,7 +8,7 @@ import * as palette from '../../../../styles/variables';
 export default function Tech({ data }) {
   const [hover, setHover] = useState(false);
 
-  const color = data.tech.hex_color;
+  const {color} = data.tech;
   const tech = data.tech.name;
   const { description } = data;
 
@@ -35,7 +35,7 @@ Tech.propTypes = {
     description: PropTypes.string,
     tech: PropTypes.shape({
       name: PropTypes.string,
-      hex_color: PropTypes.string,
+      color: PropTypes.string,
     }),
   }).isRequired,
 };

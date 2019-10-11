@@ -13,7 +13,6 @@ export default function Dashboard() {
   useEffect(() => {
     async function load() {
       const response = await api.get('dazzles');
-      console.tron.log(response.data);
       setDazzles(response.data);
     }
 
@@ -24,7 +23,7 @@ export default function Dashboard() {
     <Container>
       <Head>
         <h1>My Dazzles</h1>
-        <Link to="/">
+        <Link to="/dazzle/new">
           <MdLightbulbOutline size="18px" color={primaryGray} />
           New Dazzle
         </Link>
@@ -32,7 +31,7 @@ export default function Dashboard() {
 
       <DazzleList>
         {dazzles.map(dazzle => (
-          <Dazzle key={dazzle.id} to={`dazzle/${dazzle.id}`}>
+          <Dazzle key={dazzle.id} to={`dazzle/show/${dazzle.id}`}>
             <div>
               <img src={dazzle.logo && dazzle.logo.url} alt="" />
               <strong> {dazzle.name} </strong>

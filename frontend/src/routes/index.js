@@ -8,6 +8,8 @@ import SignUp from '../pages/SignUp';
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
 import Dazzle from '../pages/Dazzle';
+import NewDazzle from '../pages/NewDazzle';
+import EditDazzle from '../pages/EditDazzle';
 
 function Routes() {
   return (
@@ -16,7 +18,9 @@ function Routes() {
       <Route exact path="/signup" component={SignUp} />
       <Route exact path="/dashboard" component={Dashboard} isPrivate />
       <Route exact path="/profile" component={Profile} isPrivate />
-      <Route exact path="/dazzle/:id" component={Dazzle} isPrivate />
+      <Route exact path="/dazzle/new" component={NewDazzle} isPrivate />
+      <Route exact path="/dazzle/show/:id" component={Dazzle} isPrivate />
+      <Route exact path="/dazzle/edit/:id" component={EditDazzle} isPrivate />
     </Switch>
   );
 }

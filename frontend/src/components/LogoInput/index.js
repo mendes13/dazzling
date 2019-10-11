@@ -1,14 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useField } from '@rocketseat/unform';
-import PropTypes from 'prop-types';
 import { MdCameraAlt } from 'react-icons/md';
 
-import api from '../../../services/api';
+import api from '../../services/api';
 
 import { Container } from './styles';
 
-export default function AvatarInput({ userName: name }) {
-  const { defaultValue, registerField } = useField('avatar');
+export default function AvatarInput() {
+  const { defaultValue, registerField } = useField('logo');
 
   const [preview, setPreview] = useState(defaultValue && defaultValue.url);
   const [file, setFile] = useState(defaultValue && defaultValue.if);
@@ -18,7 +17,7 @@ export default function AvatarInput({ userName: name }) {
   useEffect(() => {
     if (ref.current) {
       registerField({
-        name: 'avatar_id',
+        name: 'logo_id',
         ref: ref.current,
         path: 'dataset.file',
       });
@@ -40,15 +39,12 @@ export default function AvatarInput({ userName: name }) {
 
   return (
     <Container>
-      <label htmlFor="avatar">
-        <MdCameraAlt size="40px" color="rgba(187, 187, 187, 0.8)" />
-        <img
-          src={preview || `https://api.adorable.io/avatars/50/${name}.png`}
-          alt=""
-        />
+      <label htmlFor="logo">
+        <MdCameraAlt size="25px" color="rgba(187, 187, 187, 0.8)" />
+        <img src={preview && preview} alt="" />
         <input
           type="file"
-          id="avatar"
+          id="logo"
           accept="image/*"
           data-file={file}
           onChange={handleChange}
@@ -58,11 +54,3 @@ export default function AvatarInput({ userName: name }) {
     </Container>
   );
 }
-
-AvatarInput.propTypes = {
-  userName: PropTypes.string,
-};
-
-AvatarInput.defaultProps = {
-  userName: 'adorable',
-};

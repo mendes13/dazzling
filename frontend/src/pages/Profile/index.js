@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MdCreate, MdExitToApp } from 'react-icons/md';
 import { Form, Input } from '@rocketseat/unform';
@@ -36,8 +36,6 @@ export default function Profile() {
   const profile = useSelector(state => state.user.profile);
 
   function handleSubmit(data) {
-    console.tron.log(profile);
-    console.tron.log(data);
     dispatch(updateProfileRequest(data));
   }
 
